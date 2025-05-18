@@ -1,24 +1,19 @@
 package ru.netology.services;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
-class VacationServiceTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-    @Test
-    void shouldReturn3ForExample1() {
+public class VacationServiceTest {
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/vacation_data.csv", numLinesToSkip = 1)
+    void shouldCalculateVacationMonths(int expected, int income, int expenses, int threshold) {
         VacationService service = new VacationService();
-        int actual = service.calculate(10_000, 3_000, 20_000);
-        int expected = 3;
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void shouldReturn2ForExample2() {
-        VacationService service = new VacationService();
-        int actual = service.calculate(100_000, 60_000, 150_000);
-        int expected = 2;
+        int actual = service.calculate(income, expenses, threshold);
         assertEquals(expected, actual);
     }
 }
+
 
